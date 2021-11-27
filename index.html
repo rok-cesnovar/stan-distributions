@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+   <head>
+      <script>
+         var Module = {
+           onRuntimeInitialized: function() {
+             document.getElementById("answer").innerHTML = Module.ssqrt(2).toFixed(2);
+           }
+         };
+       </script>
+       <script src="distributions.js"></script>
+   </head>
+   <body>
+      <div>     
+         Function root is approximately at x =
+         <span id="answer"/>
+      </div>
+   </body>
+</html>
