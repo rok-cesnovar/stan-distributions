@@ -1,14 +1,15 @@
 // quick_example.cpp
 #include <emscripten/bind.h>
-#include <stan/math.hpp>
+#include <stan/math/prim.hpp>
+
 #include <cmath>
 
 using namespace emscripten;
 
-float ssqrt(float a) {
-    return std::sqrt(a);
+double normal_lpdf(double y, double mu, double sigma) {
+    return stan::math::normal_lpdf(y, mu, sigma);
 }
 
 EMSCRIPTEN_BINDINGS(my_module) {
-    function("ssqrt", &ssqrt);
+    function("normal_lpdf", &normal_lpdf);
 }
