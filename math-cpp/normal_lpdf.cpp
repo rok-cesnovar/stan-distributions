@@ -1,4 +1,3 @@
-// quick_example.cpp
 #include <emscripten/bind.h>
 #include <stan/math/prim.hpp>
 
