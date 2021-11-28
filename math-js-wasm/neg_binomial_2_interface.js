@@ -85,7 +85,7 @@ var Module = {
             update(data1)
         })
         d3.select("#phi_slider").on("change", function(d){
-            sigma = this.value
+            phi = this.value
             update_data()
             update(data1)
         })
