@@ -1,12 +1,35 @@
 <!doctype html>
 <html>
-   <head>
-      <meta charset="utf-8">
-      <link rel="stylesheet" type="text/css" href="style.css">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      <script src="https://d3js.org/d3.v6.js"></script>
-      <script src="stan-distribution-zoo.js"></script>
-      <script>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://d3js.org/d3.v6.js"></script>
+  <script src="math-js-wasm/neg_binomial_2.js"></script>
+  <script src="stan-distribution-zoo.js"></script>
+  <script>
+    var x;
+    var y;
+    var svg;
+    var xAxis;
+    var yAxis;
+    var data = [];
+    var params = {
+      y_range: 40,
+      mu: 10,
+      phi: 3,
+    };
+    function update_data() {
+      data = []
+      for (let y = -params.y_range; y < params.y_range; y = y + params.y_range * 0.01) {
+        if ($("#exp-check")[0].checked) {
+          data.push({ ser1: y, ser2: Math.exp(Module.neg_binomial_2_lpmf(y, params.mu, params.phi)) })
+        } else {
+          data.push({ ser1: y, ser2: Module.neg_binomial_2_lpmf(y, params.mu, params.phi) })
+        }
+      }
+    }
       var Module = {
         onRuntimeInitialized: function() {
           $(document).ready(function(){
@@ -28,16 +51,18 @@
                   }
                 ],
                 exponentiate: true,
-                figure: true
+                continous: false
               }
             )
-            dada()
           })
         }
       }
       </script>
-      <script src="math-js-wasm/neg_binomial_2.js"></script>
-      <script src="math-js-wasm/neg_binomial_2_interface.js"></script>
-   </head>
-   <body></body>
-</html>
+
+    </head>
+
+    <body>
+      <div id="figure"></div>
+    </body>
+    
+    </html>

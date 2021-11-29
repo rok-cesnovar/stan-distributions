@@ -1,30 +1,36 @@
-function add_figure() {
+function add_figure(continous) {
 
     update_data()
-
-    const margin = { top: 30, right: 30, bottom: 30, left: 30 },
+    
+    if (continous) {
+        const margin = { top: 30, right: 30, bottom: 30, left: 30 },
         width = $("#figure").width() - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
 
-    svg = d3.select("#figure")
-        .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", `translate(${margin.left},${margin.top})`);
+        svg = d3.select("#figure")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    x = d3.scaleLinear().range([0, width]);
-    xAxis = d3.axisBottom().scale(x);
-    svg.append("g")
-        .attr("transform", `translate(0, ${height})`)
-        .attr("class", "myXaxis")
+        x = d3.scaleLinear().range([0, width]);
+        xAxis = d3.axisBottom().scale(x);
+        svg.append("g")
+            .attr("transform", `translate(0, ${height})`)
+            .attr("class", "myXaxis")
 
-    y = d3.scaleLinear().range([height, 0]);
-    yAxis = d3.axisLeft().scale(y);
-    svg.append("g")
-        .attr("class", "myYaxis")
+        y = d3.scaleLinear().range([height, 0]);
+        yAxis = d3.axisLeft().scale(y);
+        svg.append("g")
+            .attr("class", "myYaxis")
+    } else {
 
-    update()
+    }
+
+    
+
+    update(continous)
 }
 
 function setBubble(range, bubble) {
@@ -56,7 +62,7 @@ function setup_page(settings) {
                 setBubble($(this), $(this).parent().children('.bubble'))
             });
             inp.on("change", function () {
-                $(".range").each(function() {
+                $(".range").each(function () {
                     params[$(this).attr("name")] = $(this).val();
                 });
                 update()
@@ -70,17 +76,17 @@ function setup_page(settings) {
                 '<div class="range-wrap">' +
                 '<label class="container">Exponantiate<input type="checkbox" id="exp-check" ><span class="checkmark" id="exp"></span></label></div>');
             exp_check.on("change", function () {
-                    update()
+                update()
             })
             body.append(exp_check);
         }
-        add_figure()
+        add_figure(settings.continous)
     });
 
 
 }
 
-function update() {
+function update(continous) {
     update_data()
 
     x.domain([d3.min(data, function (d) { return d.ser1 }), d3.max(data, function (d) { return d.ser1 })]);
