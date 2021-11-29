@@ -1,41 +1,65 @@
 <!doctype html>
 <html>
-   <head>
-      <meta charset="utf-8">
-      <link rel="stylesheet" type="text/css" href="style.css">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      <script src="https://d3js.org/d3.v6.js"></script>
-      <script src="math-js-wasm/normal_lpdf.js"></script>
-      <script src="math-js-wasm/normal_lpdf_interface.js"></script>
-      <script src="stan-distribution-zoo.js"></script>
-      <script>
-        var Module = {
-          onRuntimeInitialized: function() {
-            setup_page(
-              {
-                function_name: "normal_lpdf (y | mu, sigma)",
-                sliders: [
-                  {
-                    name: "y_range", text: "Range of y",
-                    value: 10, min: 0, max: 1000, step: 1
-                  },
-                  {
-                    name: "mu", text: "Range of y",
-                    value: 0, min: -30, max: 30, step: 0.2
-                  },
-                  {
-                    name: "sigma", text: "sigma",
-                    value: 1, min: 0.1, max: 20, step: 0.2
-                  }
-                ],
-                exponentiate: true
-              }
-            )
-          }
-        }
-      </script>
-   </head>
-   <body><div id="figure"></div></body>
-</html>
-        
 
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://d3js.org/d3.v6.js"></script>
+  <script src="math-js-wasm/normal_lpdf.js"></script>
+  <script src="stan-distribution-zoo.js"></script>
+  <script>
+    var x;
+    var y;
+    var svg;
+    var xAxis;
+    var yAxis;
+    var data = [];
+    var params = {
+      y_range: 10,
+      mu: 0,
+      sigma: 1,
+    };
+    
+    function update_data() {
+      data = []
+      for (let y = -params.y_range; y < params.y_range; y = y + params.y_range * 0.01) {
+        if ($("#exp-check")[0].checked) {
+          data.push({ ser1: y, ser2: Math.exp(Module.normal_lpdf(y, params.mu, params.sigma)) })
+        } else {
+          data.push({ ser1: y, ser2: Module.normal_lpdf(y, params.mu, params.sigma) })
+        }
+      }
+    }
+    var Module = {
+      onRuntimeInitialized: function () {
+        setup_page(
+          {
+            function_name: "normal_lpdf (y | mu, sigma)",
+            sliders: [
+              {
+                name: "y_range", text: "Range of y",
+                value: 10, min: 0, max: 1000, step: 1
+              },
+              {
+                name: "mu", text: "mu",
+                value: 0, min: -30, max: 30, step: 0.2
+              },
+              {
+                name: "sigma", text: "sigma",
+                value: 1, min: 0.1, max: 20, step: 0.2
+              }
+            ],
+            exponentiate: true
+          }
+        )
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <div id="figure"></div>
+</body>
+
+</html>
