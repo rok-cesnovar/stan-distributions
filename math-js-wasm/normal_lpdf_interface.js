@@ -1,5 +1,5 @@
-var Module = {
-    onRuntimeInitialized: function() {
+
+function dada() {
         var exponantiate = false
         var y_range = 10;
         var mu = 0;
@@ -24,7 +24,7 @@ var Module = {
         height = 500 - margin.top - margin.bottom;
 
         // append the svg object to the body of the page
-        const svg = d3.select("#my_dataviz")
+        const svg = d3.select("#figure")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -81,53 +81,27 @@ var Module = {
 
         // At the beginning, I run the update function on the first dataset:
         update(data1)
-        d3.select("#y_range_slider").on("change", function(d){
-            y_range = this.value
-            update_data()
-            update(data1)
-        })
-        d3.select("#mu_slider").on("change", function(d){
-            mu = this.value
-            update_data()
-            update(data1)
-        })
-        d3.select("#sigma_slider").on("change", function(d){
-            sigma = this.value
-            update_data()
-            update(data1)
-        })
+
         $(document).ready(function(){
+            d3.select("#y_range_slider").on("change", function(d){
+                y_range = this.value
+                update_data()
+                update(data1)
+            })
+            d3.select("#mu_slider").on("change", function(d){
+                mu = this.value
+                update_data()
+                update(data1)
+            })
+            d3.select("#sigma_slider").on("change", function(d){
+                sigma = this.value
+                update_data()
+                update(data1)
+            })
             d3.select("#exp-check").on("change", function(d){
                 exponantiate = $("#exp-check")[0].checked
                 update_data()
                 update(data1)
             })
         });
-    }
-  };
-
-  $(document).ready(function(){
-    const allRanges = document.querySelectorAll(".range-wrap");
-    allRanges.forEach(wrap => {
-    const range = wrap.querySelector(".range");
-    const bubble = wrap.querySelector(".bubble");
-    
-    range.addEventListener("input", () => {
-       setBubble(range, bubble);
-    });
-    setBubble(range, bubble);
-    });
-    
-    function setBubble(range, bubble) {
-        const val = range.value;
-        const min = range.min ? range.min : 0;
-        const max = range.max ? range.max : 100;
-        const newVal = Number(((val - min) * 100) / (max - min));
-        bubble.innerHTML = val;
-        
-        // Sorta magic numbers based on size of the native UI thumb
-        bubble.style.left = `calc(${newVal}% + (${8 - newVal * 0.15}px))`;
-    }
-
-    $("input").style.backgroundColor = '#b2001d';
- });         
+}        

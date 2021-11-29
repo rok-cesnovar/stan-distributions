@@ -4,6 +4,7 @@
  .range-wrap {
  position: relative;
  margin: 0 auto 1rem;
+ width: 50%;
  }
  .range {
  width: 100%;
@@ -181,4 +182,14 @@
    -webkit-transform: rotate(45deg);
    -ms-transform: rotate(45deg);
    transform: rotate(45deg);
+ }
+
+ .distribution-name {
+  width: 50%;
+  margin: auto;
+ }
+
+ #figure {
+  width: 50%;
+  margin: auto;
  }
