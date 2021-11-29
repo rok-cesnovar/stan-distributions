@@ -1,11 +1,12 @@
 
-function dada() {
+function add_figure() {
         var exponantiate = false
         var y_range = 10;
         var mu = 0;
         var sigma = 1;
         var data1 = [];
 
+        
         function update_data() {
             data1 = []
             for (let y = -y_range; y < y_range; y = y + y_range*0.01) {
@@ -19,8 +20,8 @@ function dada() {
         update_data()
 
         // set the dimensions and margins of the graph
-        const margin = {top: 10, right: 30, bottom: 30, left: 50},
-        width = 800 - margin.left - margin.right,
+        const margin = {top: 30, right: 30, bottom: 30, left: 30},
+        width = $("#figure").width() - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
 
         // append the svg object to the body of the page
@@ -81,27 +82,4 @@ function dada() {
 
         // At the beginning, I run the update function on the first dataset:
         update(data1)
-
-        $(document).ready(function(){
-            d3.select("#y_range_slider").on("change", function(d){
-                y_range = this.value
-                update_data()
-                update(data1)
-            })
-            d3.select("#mu_slider").on("change", function(d){
-                mu = this.value
-                update_data()
-                update(data1)
-            })
-            d3.select("#sigma_slider").on("change", function(d){
-                sigma = this.value
-                update_data()
-                update(data1)
-            })
-            d3.select("#exp-check").on("change", function(d){
-                exponantiate = $("#exp-check")[0].checked
-                update_data()
-                update(data1)
-            })
-        });
 }        

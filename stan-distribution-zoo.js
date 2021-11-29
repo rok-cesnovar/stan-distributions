@@ -1,3 +1,13 @@
+function setBubble(range, bubble) {
+    const val = range.val();
+    const min = range.attr("min");
+    const max = range.attr("max");
+    const newVal = Number(((val - min) * 100) / (max - min));
+    bubble
+        .html(val)
+        .css("left", `calc(${newVal}% + (${8 - newVal * 0.15}px))`);
+}
+
 function setup_page(settings) {
     $(document).ready(function () {
         $("head").append($("<title>" + settings.function_name + "</title>"));
@@ -10,8 +20,13 @@ function setup_page(settings) {
             var inp = $('<input type="range" class="range" value="'
                 + settings.sliders[i].value + '" min="' + settings.sliders[i].min
                 + '" max="' + settings.sliders[i].max + '" step="' + settings.sliders[i].step
-                + '" id="' + settings.sliders[i].name + '" name="' + settings.sliders[i].name + '" ></input>');
+                + '" id="' + settings.sliders[i].name + '" name="' + settings.sliders[i].name + '" >');
             var out = $('<output class="bubble"></output>');
+            inp.on("input", function() {
+                
+                setBubble($(this), $(this).parent().children('.bubble'))
+            });
+            setBubble(inp, out);
             var slider = $('<div class="range-wrap"></div>');
             body.append(slider.append(label).append(inp).append(out));
         }
@@ -21,31 +36,29 @@ function setup_page(settings) {
                 '<label class="container">Exponantiate<input type="checkbox" id="exp-check" ><span class="checkmark" id="exp"></span></label></div>');
             body.append(exp_check);
         }
-        if (settings.figure) {
-            body.append($('<div id="figure"></div>'));
-        }
-        const allRanges = document.querySelectorAll(".range-wrap");
-        allRanges.forEach(wrap => {
-            const range = wrap.querySelector(".range");
-            const bubble = wrap.querySelector(".bubble");
-    
-            range.addEventListener("input", () => {
-                setBubble(range, bubble);
-            });
-            setBubble(range, bubble);
-        });
         
-        function setBubble(range, bubble) {
-            const val = range.value;
-            const min = range.min ? range.min : 0;
-            const max = range.max ? range.max : 100;
-            const newVal = Number(((val - min) * 100) / (max - min));
-            bubble.innerHTML = val;
-            
-            // Sorta magic numbers based on size of the native UI thumb
-            bubble.style.left = `calc(${newVal}% + (${8 - newVal * 0.15}px))`;
-        }
-        
-        $("input").style.backgroundColor = '#b2001d';
+        add_figure()
+        // d3.select("#y_range_slider").on("change", function(d){
+        //     y_range = this.value
+        //     update_data()
+        //     update(data1)
+        // })
+        // d3.select("#mu_slider").on("change", function(d){
+        //     mu = this.value
+        //     update_data()
+        //     update(data1)
+        // })
+        // d3.select("#sigma_slider").on("change", function(d){
+        //     sigma = this.value
+        //     update_data()
+        //     update(data1)
+        // })
+        // d3.select("#exp-check").on("change", function(d){
+        //     exponantiate = $("#exp-check")[0].checked
+        //     update_data()
+        //     update(data1)
+        // })
     });
+
+
 }
