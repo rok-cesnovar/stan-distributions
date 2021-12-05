@@ -5,6 +5,8 @@ Stan distribution compiled to WASM
 
 ### Unbounded Continuous Distributions
 
+- cauchy: https://rok-cesnovar.github.io/stan-distribution-zoo/cauchy
+
 - exp_mod_normal: https://rok-cesnovar.github.io/stan-distribution-zoo/exp_mod_normal
 
 - normal: https://rok-cesnovar.github.io/stan-distribution-zoo/normal
