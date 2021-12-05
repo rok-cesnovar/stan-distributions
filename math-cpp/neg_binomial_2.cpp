@@ -5,7 +5,7 @@
 
 using namespace emscripten;
 
-double neg_binomial_2_lpmf(double y, double mu, double phi) {
+double neg_binomial_2_lpmf(int y, double mu, double phi) {
     return stan::math::neg_binomial_2_lpmf(y, mu, phi);
 }
 
