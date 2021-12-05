@@ -47,6 +47,15 @@ Stan distribution compiled to WASM
 
 - [weibull](https://rok-cesnovar.github.io/stan-distribution-zoo/weibull)
 
+### Continuous Distributions on [0, 1]
+
+- [beta](https://rok-cesnovar.github.io/stan-distribution-zoo/beta)
+
+- [beta_proportion](https://rok-cesnovar.github.io/stan-distribution-zoo/beta_proportion)
+
+### Circular Distributions
+
+- [von_mises](https://rok-cesnovar.github.io/stan-distribution-zoo/von_mises)
 ### Unbounded Discrete Distributions
 
 - [neg_binomial_2](https://rok-cesnovar.github.io/stan-distribution-zoo/neg_binomial_2)
