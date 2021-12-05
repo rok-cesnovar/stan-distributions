@@ -1,18 +1,18 @@
 var height;
 var width;
-function add_figure() {
+function add_figure(x_axis_text) {
 
     update_data()
-    
+
     if (continous) {
-        const margin = { top: 30, right: 30, bottom: 30, left: 30 };
+        const margin = { top: 30, right: 50, bottom: 30, left: 50 };
         width = $("#figure").width() - margin.left - margin.right;
         height = 500 - margin.top - margin.bottom;
 
         svg = d3.select("#figure")
             .append("svg")
             .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
+            .attr("height", height + margin.top + margin.bottom + 20)
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
@@ -27,31 +27,38 @@ function add_figure() {
         svg.append("g")
             .attr("class", "myYaxis")
     } else {
-        const margin = { top: 30, right: 30, bottom: 30, left: 30 };
+        const margin = { top: 30, right: 50, bottom: 30, left: 50 };
         width = $("#figure").width() - margin.left - margin.right;
         height = 500 - margin.top - margin.bottom;
         // append the svg object to the body of the page
         svg = d3.select("#figure")
-        .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", `translate(${margin.left},${margin.top})`);
+            .append("svg")
+            .attr("width", width + margin.left + margin.right + 20)
+            .attr("height", height + margin.top + margin.bottom + 20)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
 
         // Initialize the X axis
         x = d3.scaleBand()
-        .range([ 0, width ])
-        .padding(0.2);
+            .range([0, width])
+            .padding(0.2);
         xAxis = svg.append("g")
-        .attr("transform", `translate(0,${height})`)
+            .attr("transform", `translate(0,${height})`)
 
         // Initialize the Y axis
         y = d3.scaleLinear()
-        .range([ height, 0]);
+            .range([height, 0]);
         yAxis = svg.append("g")
-        .attr("class", "myYaxis")
+            .attr("class", "myYaxis")
 
-    }    
+    }
+
+    svg.append("text")
+        .attr("class", "x label")
+        .attr("text-anchor", "end")
+        .attr("x", width/2)
+        .attr("y", height+30)
+        .text(x_axis_text);
 
     update()
 }
@@ -103,7 +110,7 @@ function setup_page(settings) {
             })
             body.append(exp_check);
         }
-        add_figure()
+        add_figure(settings.x_axis_text)
     });
 
 
@@ -111,27 +118,27 @@ function setup_page(settings) {
 
 function update() {
     update_data()
-    
+
     if (continous) {
         x.domain([d3.min(data, function (d) { return d.ser1 }), d3.max(data, function (d) { return d.ser1 })]);
         svg.selectAll(".myXaxis").transition()
-            .duration(3000)
+            .duration(2000)
             .call(xAxis);
-    
+
         y.domain([d3.min(data, function (d) { return d.ser2 }), d3.max(data, function (d) { return d.ser2 })]);
         svg.selectAll(".myYaxis")
             .transition()
-            .duration(3000)
+            .duration(2000)
             .call(yAxis);
-    
+
         const u = svg.selectAll(".lineTest")
             .data([data], function (d) { return d.ser1 });
-    
+
         u
             .join("path")
             .attr("class", "lineTest")
             .transition()
-            .duration(3000)
+            .duration(2000)
             .attr("d", d3.line()
                 .x(function (d) { return x(d.ser1); })
                 .y(function (d) { return y(d.ser2); }))
@@ -142,17 +149,15 @@ function update() {
         x.domain(data.map(d => d.ser1))
         xAxis.call(d3.axisBottom(x))
 
-        // Update the Y axis
-        y.domain([d3.min(data, d => d.ser2), d3.max(data, d => d.ser2) ]);
+        y.domain([d3.min(data, d => d.ser2), d3.max(data, d => d.ser2)]);
         yAxis.transition().duration(1000).call(d3.axisLeft(y));
 
-        // Create the u variable
         var u = svg.selectAll("rect")
             .data(data)
 
         u
-            .join("rect") // Add a new rect for each new elements
-            .transition() 
+            .join("rect")
+            .transition()
             .duration(1000)
             .attr("x", d => x(d.ser1))
             .attr("y", d => y(d.ser2))
