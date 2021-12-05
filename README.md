@@ -2,8 +2,14 @@
 
 Stan distribution compiled to WASM
 
-Demo links: 
 
-- normal_lpdf: https://rok-cesnovar.github.io/stan-distribution-zoo/normal_lpdf
+### Unbounded Continuous Distributions
 
-- neg_binomial_2_lpmf: https://rok-cesnovar.github.io/stan-distribution-zoo/neg_binomial_2
+- normal: https://rok-cesnovar.github.io/stan-distribution-zoo/normal
+
+- std_normal: https://rok-cesnovar.github.io/stan-distribution-zoo/std_normal
+
+
+### Unbounded Discrete Distributions
+
+- neg_binomial_2: https://rok-cesnovar.github.io/stan-distribution-zoo/neg_binomial_2
