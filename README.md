@@ -5,7 +5,7 @@ Stan distribution compiled to WASM
 
 ### Unbounded Continuous Distributions
 
-- cauchy: https://rok-cesnovar.github.io/stan-distribution-zoo/cauchy
+- [cauchy](https://rok-cesnovar.github.io/stan-distribution-zoo/cauchy)
 
 - double_exponential: https://rok-cesnovar.github.io/stan-distribution-zoo/double_exponential
 
