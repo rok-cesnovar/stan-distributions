@@ -1,40 +1,68 @@
 <!doctype html>
 <html>
-   <head>
-      <meta charset="utf-8">
-      <link rel="stylesheet" type="text/css" href="style.css">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      <script src="https://d3js.org/d3.v6.js"></script>
-      <script src="math-js-wasm/neg_binomial_2.js"></script>
-      <script src="math-js-wasm/neg_binomial_2_interface.js"></script>
-   </head>
-   <body>
-       <div style="width: 50%;margin: auto"><h2>neg_binomial_2_lpmf (y | mu, sigma)</h2></div>
-       <div class="range-wrap" style="width: 50%;">
-         <label for="y_range_slider">Range of y</label>
-         <input type="range" class="range" value="40" min="0" max="100" step="1" id="y_range_slider" name="y_range_slider" >
-         <output class="bubble"></output>
-       </div>
-       
-       <div class="range-wrap" style="width: 50%;">
-         <label for="mu_slider">mu</label>
-         <input type="range" class="range" min="0" max="50" value="10" step = "0.2" id="mu_slider" name="mu_slider">
-         <output class="bubble"></output>
-       </div>
-       
-       <div class="range-wrap" style="width: 50%;">
-         <label for="phi_slider">phi</label>
-         <input type="range" class="range" min="0" max="100" value="3" step = "0.2" id="phi_slider" name="phi_slider" >
-         <output class="bubble"></output>
-       </div>
-       <div class="range-wrap" style="width: 50%;">
-         <label class="container">Exponantiate
-           <input type="checkbox" id="exp-check" >
-           <span class="checkmark" id="exp"></span>
-         </label>
-        </div>
-       <div id="my_dataviz" style="width: 50%;margin: auto"></div>
-   </body>
-</html>
-        
 
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://d3js.org/d3.v6.js"></script>
+  <script src="math-js-wasm/neg_binomial_2.js"></script>
+  <script src="stan-distribution-zoo.js"></script>
+  <script>
+    var x;
+    var y;
+    var svg;
+    var xAxis;
+    var yAxis;
+    var data = [];
+    var params = {
+      y_range: 40,
+      mu: 10,
+      phi: 3,
+    };
+    var continous = false;
+    function update_data() {
+      data = []
+      for (let y = 0; y < params.y_range; y = y + 1) {
+        if ($("#exp-check")[0].checked) {
+          data.push({ ser1: y, ser2: Math.exp(Module.neg_binomial_2_lpmf(y, params.mu, params.phi)) })
+        } else {
+          data.push({ ser1: y, ser2: Module.neg_binomial_2_lpmf(y, params.mu, params.phi) })
+        }
+      }
+    }
+      var Module = {
+        onRuntimeInitialized: function() {
+          $(document).ready(function(){
+            setup_page(
+              {
+                function_name: "neg_binomial_2_lpmf (y | mu, sigma)",
+                sliders: [
+                  {
+                    name: "y_range", text: "Range of y",
+                    value: 40, min: 1, max: 100, step: 1
+                  },
+                  {
+                    name: "mu", text: "mu",
+                    value: 10, min: 0, max: 50, step: 0.2
+                  },
+                  {
+                    name: "phi", text: "phi",
+                    value: 3, min: 0, max: 100, step: 0.2
+                  }
+                ],
+                exponentiate: true
+              }
+            )
+          })
+        }
+      }
+      </script>
+
+    </head>
+
+    <body>
+      <div id="figure"></div>
+    </body>
+    
+    </html>
