@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://d3js.org/d3.v6.js"></script>
+  <script src="math-js-wasm/exp_mod_normal.js"></script>
+  <script src="stan-distribution-zoo.js"></script>
+  <script>
+    var x;
+    var y;
+    var svg;
+    var xAxis;
+    var yAxis;
+    var data = [];
+    var params = {
+      y_range: 10,
+      mu: 1,
+      sigma: 2,
+      lambda: 1
+    };
+    var continous = true;
+
+    function update_data() {
+      data = []
+      for (let y = -params.y_range; y < params.y_range; y = y + params.y_range * 0.01) {
+        if ($("#exp-check")[0].checked) {
+          data.push({ ser1: y, ser2: Math.exp(Module.exp_mod_normal_lpdf(y, params.mu, params.sigma, params.lambda)) })
+        } else {
+          data.push({ ser1: y, ser2: Module.exp_mod_normal_lpdf(y, params.mu, params.sigma, params.lambda) })
+        }
+      }
+    }
+    var Module = {
+      onRuntimeInitialized: function () {
+        setup_page(
+          {
+            function_name: "exp_mod_normal_lpdf (y | mu, sigma, lamdba)",
+            sliders: [
+              {
+                name: "y_range", text: "Range of y",
+                value: 10, min: 0, max: 1000, step: 1
+              },
+              {
+                name: "mu", text: "mu",
+                value: 0, min: -30, max: 30, step: 0.2
+              },
+              {
+                name: "sigma", text: "sigma",
+                value: 1, min: 0.1, max: 20, step: 0.2
+              },
+              {
+                name: "lambda", text: "lambda",
+                value: 0, min: 0.1, max: 20, step: 0.2
+              }
+            ],
+            exponentiate: true,
+            continous: true, 
+            x_axis_text: "y"
+          }
+        )
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <div id="figure"></div>
+</body>
+
+</html>
