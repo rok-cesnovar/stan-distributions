@@ -17,6 +17,8 @@ Stan distribution compiled to WASM
 
 - normal: https://rok-cesnovar.github.io/stan-distribution-zoo/normal
 
+- skew_double_exponential: https://rok-cesnovar.github.io/stan-distribution-zoo/skew_double_exponential
+
 - skew_normal: https://rok-cesnovar.github.io/stan-distribution-zoo/skew_normal
 
 - std_normal: https://rok-cesnovar.github.io/stan-distribution-zoo/std_normal
