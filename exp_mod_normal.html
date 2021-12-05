@@ -26,11 +26,11 @@
     function update_data() {
       data = []
       for (let y = -params.y_range; y < params.y_range; y = y + params.y_range * 0.01) {
+        let res = Module.exp_mod_normal_lpdf(y, params.mu, params.sigma, params.lambda)
         if ($("#exp-check")[0].checked) {
-          data.push({ ser1: y, ser2: Math.exp(Module.exp_mod_normal_lpdf(y, params.mu, params.sigma, params.lambda)) })
-        } else {
-          data.push({ ser1: y, ser2: Module.exp_mod_normal_lpdf(y, params.mu, params.sigma, params.lambda) })
+          res = Math.exp(res) 
         }
+        data.push({ ser1: y, ser2:  res})
       }
     }
     var Module = {

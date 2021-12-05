@@ -26,11 +26,11 @@
     function update_data() {
       data = []
       for (let y = -params.y_range; y < params.y_range; y = y + params.y_range * 0.01) {
+        let res = Module.skew_normal_lpdf(y, params.xi, params.omega, params.alpha)
         if ($("#exp-check")[0].checked) {
-          data.push({ ser1: y, ser2: Math.exp(Module.skew_normal_lpdf(y, params.xi, params.omega, params.alpha)) })
-        } else {
-          data.push({ ser1: y, ser2: Module.skew_normal_lpdf(y, params.xi, params.omega, params.alpha) })
+          res = Math.exp(res) 
         }
+        data.push({ ser1: y, ser2:  res})
       }
     }
     var Module = {

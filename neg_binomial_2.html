@@ -24,11 +24,11 @@
     function update_data() {
       data = []
       for (let y = 0; y < params.y_range; y = y + 1) {
+        let res = Module.neg_binomial_2_lpmf(y, params.mu, params.phi)
         if ($("#exp-check")[0].checked) {
-          data.push({ ser1: y, ser2: Math.exp(Module.neg_binomial_2_lpmf(y, params.mu, params.phi)) })
-        } else {
-          data.push({ ser1: y, ser2: Module.neg_binomial_2_lpmf(y, params.mu, params.phi) })
+          res = Math.exp(res) 
         }
+        data.push({ ser1: y, ser2:  res})
       }
     }
       var Module = {

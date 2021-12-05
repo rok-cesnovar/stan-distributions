@@ -17,7 +17,6 @@ Stan distribution compiled to WASM
 
 - student_t: https://rok-cesnovar.github.io/stan-distribution-zoo/student_t
 
-
 ### Unbounded Discrete Distributions
 
 - neg_binomial_2: https://rok-cesnovar.github.io/stan-distribution-zoo/neg_binomial_2
