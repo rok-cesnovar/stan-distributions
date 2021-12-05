@@ -11,6 +11,10 @@ Stan distribution compiled to WASM
 
 - exp_mod_normal: https://rok-cesnovar.github.io/stan-distribution-zoo/exp_mod_normal
 
+- gumbel: https://rok-cesnovar.github.io/stan-distribution-zoo/gumbel
+
+- logistic: https://rok-cesnovar.github.io/stan-distribution-zoo/logistic
+
 - normal: https://rok-cesnovar.github.io/stan-distribution-zoo/normal
 
 - skew_normal: https://rok-cesnovar.github.io/stan-distribution-zoo/skew_normal
