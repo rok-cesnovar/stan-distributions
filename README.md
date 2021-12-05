@@ -13,6 +13,8 @@ Stan distribution compiled to WASM
 
 - std_normal: https://rok-cesnovar.github.io/stan-distribution-zoo/std_normal
 
+- student_t: https://rok-cesnovar.github.io/stan-distribution-zoo/student_t
+
 
 ### Unbounded Discrete Distributions
 
