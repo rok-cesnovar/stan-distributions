@@ -1,6 +1,6 @@
-# stan-distribution-zoo
+# stan-distributions
 
-Stan distribution compiled to WASM
+Stan distribution compiled to WASM and visualized using d3.js.
 
 
 ### Unbounded Continuous Distributions
