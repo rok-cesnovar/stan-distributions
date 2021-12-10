@@ -4,7 +4,7 @@ A web app to visualize distributions in Stan. It uses Stan Math C++ code to eval
 
 This was inspired by the [distribution zoo](https://github.com/ben18785/distribution-zoo). The main differences of this approach are: 
 - it runs entirely in the user's browser and does not require a server (very easy to fork and deploy your own custom version),
-- it uses the Stan implementation for all density/mass functions (Distribution zoo is based on R implementations).
+- it uses the actual Stan C++ for all density/mass functions (Distribution zoo is based on R distribution implementations).
 
 This currently supports the majority of Stan's univariate continuous distributions. Missing discrete distributions will be added shortly.
 
