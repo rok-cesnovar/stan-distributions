@@ -1,4 +1,4 @@
-# stan-distributions
+# Stan distributions
 
 A web app to visualize distributions in Stan. It uses Stan Math C++ code to evaluate the log probability density/mass functions. The Stan Math C++ is compiled to Webassembly using [Emscripten](https://emscripten.org/index.html). [d3.js](https://d3js.org/) is used for visualizations.
 
