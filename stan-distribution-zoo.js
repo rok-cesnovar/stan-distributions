@@ -4,7 +4,7 @@ function add_figure(x_axis_text) {
 
     update_data()
 
-    if (continous) {
+    if (continuous) {
         const margin = { top: 30, right: 50, bottom: 30, left: 50 };
         width = $("#figure").width() - margin.left - margin.right;
         height = 500 - margin.top - margin.bottom;
@@ -119,7 +119,7 @@ function setup_page(settings) {
 function update() {
     update_data()
 
-    if (continous) {
+    if (continuous) {
         x.domain([d3.min(data, function (d) { return d.ser1 }), d3.max(data, function (d) { return d.ser1 })]);
         svg.selectAll(".myXaxis").transition()
             .duration(2000)
