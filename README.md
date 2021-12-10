@@ -1,7 +1,12 @@
 # stan-distributions
 
-Stan distribution compiled to WASM and visualized using d3.js.
+A web app to visualize distributions in Stan. It uses Stan Math C++ code to evaluate the log probability density/mass functions. The Stan Math C++ is compiled to Webassembly using [Emscripten](https://emscripten.org/index.html). [d3.js](https://d3js.org/) is used for visualizations.
 
+This was inspired by the [distribution zoo](https://github.com/ben18785/distribution-zoo). The main differences of this approach are: 
+- it runs entirely in the browser and does not require a server
+- it uses the Stan implementation for all density/mass functions (Distribution zoo is based on R implementations)
+
+This currently supports the majority of Stan's continuous density functions. Mass functions will be added shortly.
 
 ### Unbounded Continuous Distributions
 
