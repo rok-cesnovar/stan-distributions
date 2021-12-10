@@ -17,8 +17,8 @@
     var data = [];
     var params = {
       y_range: 20,
-      alpha: 4,
-      beta: 2,
+      alpha: 5,
+      beta: 1,
     };
     var continuous = true;
 
@@ -40,15 +40,15 @@
             sliders: [
               {
                 name: "y_range", text: "Range of y",
-                value: 20, min: 0, max: 1000, step: 1
+                value: params.y_range, min: 0, max: 200, step: 1
               },
               {
                 name: "alpha", text: "alpha",
-                value: 4, min: 0.1, max: 30, step: 0.1
+                value: params.alpha, min: 0.1, max: 30, step: 0.1
               },
               {
                 name: "beta", text: "beta",
-                value: 2, min: 0.1, max: 30, step: 0.1
+                value: params.beta, min: 0.1, max: 30, step: 0.1
               }
             ],
             exponentiate: true,
