@@ -6,7 +6,7 @@ This was inspired by the [distribution zoo](https://github.com/ben18785/distribu
 - it runs entirely in the browser and does not require a server
 - it uses the Stan implementation for all density/mass functions (Distribution zoo is based on R implementations)
 
-This currently supports the majority of Stan's continuous density functions. Mass functions will be added shortly.
+This currently supports the majority of Stan's univariate continuous distributions. Missing discrete distributions will be added shortly.
 
 ### Unbounded Continuous Distributions
 
