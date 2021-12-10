@@ -8,6 +8,8 @@ This was inspired by the [distribution zoo](https://github.com/ben18785/distribu
 
 This currently supports the majority of Stan's univariate continuous distributions. Missing discrete distributions will be added shortly.
 
+## Links
+
 ### Unbounded Continuous Distributions
 
 - [cauchy](https://rok-cesnovar.github.io/stan-distributions/cauchy)
@@ -64,3 +66,22 @@ This currently supports the majority of Stan's univariate continuous distributio
 ### Unbounded Discrete Distributions
 
 - [neg_binomial_2](https://rok-cesnovar.github.io/stan-distributions/neg_binomial_2)
+
+
+## Running it locally
+
+1. Clone the repository
+
+```
+git clone https://github.com/rok-cesnovar/stan-distributions/
+```
+
+2. Start a simple Python server
+
+This is required in order to serve the .wasm files. The actual computation still happens in the browser.
+
+```
+python3 -m http.server 8000
+```
+
+3. Open localhost:8000 in your favorite browser. Change the port number in step 2 if needed.
