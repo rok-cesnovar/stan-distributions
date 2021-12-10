@@ -56,7 +56,7 @@ This currently supports the majority of Stan's univariate continuous distributio
 
 - [beta](https://rok-cesnovar.github.io/stan-distributions/beta)
 
-- [beta_proportion](https://rok-cesnovar.github.io/stan-distributions/beta_proportion)
+<!-- - [beta_proportion](https://rok-cesnovar.github.io/stan-distributions/beta_proportion) -->
 
 ### Circular Distributions
 
