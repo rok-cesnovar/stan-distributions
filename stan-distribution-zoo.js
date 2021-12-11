@@ -104,7 +104,7 @@ function setup_page(settings) {
         if (settings.exponentiate) {
             var exp_check = $(
                 '<div class="range-wrap">' +
-                '<label class="container">Exponantiate<input type="checkbox" id="exp-check" ><span class="checkmark" id="exp"></span></label></div>');
+                '<label class="container">Exponentiate<input type="checkbox" id="exp-check" ><span class="checkmark" id="exp"></span></label></div>');
             exp_check.on("change", function () {
                 update()
             })
