@@ -6,7 +6,7 @@
 using namespace emscripten;
 
 double beta_proportion_lpdf(double theta, double mu, double kappa) {
-    return stan::math::beta_lpdf(theta, mu, kappa);
+    return stan::math::beta_proportion_lpdf(theta, mu, kappa);
 }
 
 EMSCRIPTEN_BINDINGS(my_module) {
