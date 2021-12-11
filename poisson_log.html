@@ -6,7 +6,7 @@
   <link rel="stylesheet" type="text/css" href="style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://d3js.org/d3.v6.js"></script>
-  <script src="math-js-wasm/neg_binomial_2.js"></script>
+  <script src="math-js-wasm/poisson_log.js"></script>
   <script src="stan-distribution-zoo.js"></script>
   <script>
     var x;
@@ -17,14 +17,13 @@
     var data = [];
     var params = {
       n_range: 40,
-      mu: 10,
-      phi: 3,
+      alpha: 2
     };
     var continuous = false;
     function update_data() {
       data = []
       for (let n = 0; n < params.n_range; n = n + 1) {
-        let res = Module.neg_binomial_2_lpmf(n, params.mu, params.phi)
+        let res = Module.poisson_log_lpmf(n, params.alpha)
         if ($("#exp-check")[0].checked) {
           res = Math.exp(res) 
         }
@@ -36,19 +35,15 @@
           $(document).ready(function(){
             setup_page(
               {
-                function_name: "neg_binomial_2_lpmf (n | mu, sigma)",
+                function_name: "poisson_log_lpmf (n | alpha)",
                 sliders: [
                   {
                     name: "n_range", text: "Range of n",
                     value: params.n_range, min: 1, max: 100, step: 1
                   },
                   {
-                    name: "mu", text: "mu",
-                    value: params.mu, min: 0, max: 50, step: 0.1
-                  },
-                  {
-                    name: "phi", text: "phi",
-                    value: params.phi, min: 0, max: 100, step: 0.1
+                    name: "alpha", text: "alpha",
+                    value: params.alpha, min: -30, max: 30, step: 0.1
                   }
                 ],
                 exponentiate: true, 
