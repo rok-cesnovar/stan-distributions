@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://d3js.org/d3.v6.js"></script>
+  <script src="math-js-wasm/uniform.js"></script>
+  <script src="stan-distribution-zoo.js"></script>
+  <script>
+    var x;
+    var y;
+    var svg;
+    var xAxis;
+    var yAxis;
+    
+    var data = [];
+    var params = {
+      y_range: 10,
+      alpha: 0,
+      beta: 3,
+    };
+    var old_alpha = params.alpha;
+    var old_beta = params.beta;
+    var x_axis_start = -params.y_range
+    var x_axis_stop = params.y_range
+    var continuous = true;
+
+    function update_data() {
+      data = []
+      x_axis_start = -params.y_range
+      x_axis_stop = params.y_range
+      console.log(params.alpha + " - " + params.beta)
+      if (+params.alpha >= +params.beta) {
+        params.alpha = old_alpha
+        $("#alpha").val(params.alpha)
+        setBubble($("#alpha"), $("#alpha").parent().children('.bubble'))
+        params.beta = old_beta
+        $("#beta").val(params.beta)
+        setBubble($("#beta"), $("#beta").parent().children('.bubble'))
+      } else {
+        old_alpha = params.alpha
+        old_beta = params.beta
+      }
+      let start = params.alpha
+      if (params.alpha < -params.y_range) {
+        start = -params.y_range
+      }
+      for (let yy = start; yy <= params.beta; yy = +yy + (params.beta-params.alpha) * 0.001) {
+          let res = Module.uniform_lpdf(yy, params.alpha, params.beta)
+          if ($("#exp-check")[0].checked) {
+            res = Math.exp(res) 
+          }
+          data.push({ ser1: yy, ser2:  res})
+      }
+    }
+    var Module = {
+      onRuntimeInitialized: function () {
+        setup_page(
+          {
+            function_name: "uniform_lpdf (y | alpha, beta)",
+            sliders: [
+              {
+                name: "y_range", text: "Range of y",
+                value: params.y_range, min: 1, max: 200, step: 1
+              },
+              {
+                name: "alpha", text: "alpha",
+                value: params.alpha, min: -30, max: 30, step: 0.1
+              },
+              {
+                name: "beta", text: "beta",
+                value: params.beta, min: -30, max: 30, step: 0.1
+              }
+            ],
+            exponentiate: true,
+            continuous: true, 
+            x_axis_text: "y"
+          }
+        )
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <div id="figure"></div>
+</body>
+
+</html>

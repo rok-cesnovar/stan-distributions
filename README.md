@@ -71,6 +71,10 @@ This currently supports the majority of Stan's univariate continuous distributio
 ### Circular Distributions
 
 - [von_mises](https://rok-cesnovar.github.io/stan-distributions/von_mises)
+
+### Bounded Continuous Distributions
+
+- [uniform](https://rok-cesnovar.github.io/stan-distributions/uniform)
 ### Unbounded Discrete Distributions
 
 - [neg_binomial](https://rok-cesnovar.github.io/stan-distributions/neg_binomial)
