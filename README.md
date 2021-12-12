@@ -65,8 +65,15 @@ This currently supports the majority of Stan's univariate continuous distributio
 - [von_mises](https://rok-cesnovar.github.io/stan-distributions/von_mises)
 ### Unbounded Discrete Distributions
 
+- [neg_binomial](https://rok-cesnovar.github.io/stan-distributions/neg_binomial)
+
 - [neg_binomial_2](https://rok-cesnovar.github.io/stan-distributions/neg_binomial_2)
 
+- [neg_binomial_2_log](https://rok-cesnovar.github.io/stan-distributions/neg_binomial_2_log)
+
+- [poisson](https://rok-cesnovar.github.io/stan-distributions/poisson)
+
+- [poisson_log](https://rok-cesnovar.github.io/stan-distributions/poisson_log)
 
 ## Running it locally
 
