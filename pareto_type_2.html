@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://d3js.org/d3.v6.js"></script>
+  <script src="math-js-wasm/wiener.js"></script>
+  <script src="stan-distribution-zoo.js"></script>
+  <script>
+    var x;
+    var y;
+    var svg;
+    var xAxis;
+    var yAxis;
+    var data = [];
+    var params = {
+      y_range: 40,
+      alpha: 5,
+      tau: 1,
+      beta: 0.25,
+      delta: 0.2
+    };
+    var continuous = true;
+
+    function update_data() {
+      data = []
+      for (let y = 0.01; y < params.y_range; y = y + params.y_range * 0.001) {
+        if(y > params.tau) {
+          let res = Module.wiener_lpdf(y, params.alpha, params.tau, params.beta, params.delta)
+          if ($("#exp-check")[0].checked) {
+            res = Math.exp(res) 
+          }
+          data.push({ ser1: y, ser2:  res})
+        }
+      }
+    }
+    var Module = {
+      onRuntimeInitialized: function () {
+        setup_page(
+          {
+            function_name: "wiener_lpdf (y | alpha, tau, beta, delta)",
+            sliders: [
+              {
+                name: "y_range", text: "Range of y",
+                value: params.y_range, min: 1, max: 200, step: 1
+              },
+              {
+                name: "alpha", text: "alpha",
+                value: params.alpha, min: 0.1, max: 30, step: 0.1
+              },
+              {
+                name: "tau", text: "tau",
+                value: params.tau, min: 0.1, max: 30, step: 0.1
+              },
+              {
+                name: "beta", text: "beta",
+                value: params.beta, min: 0, max: 1, step: 0.01
+              },
+              {
+                name: "delta", text: "delta",
+                value: params.delta, min: -30, max: 30, step: 0.1
+              }
+            ],
+            exponentiate: true,
+            continuous: true, 
+            x_axis_text: "y"
+          }
+        )
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <div id="figure"></div>
+</body>
+
+</html>

@@ -120,11 +120,16 @@ function update() {
     update_data()
 
     if (continuous) {
-        x.domain([d3.min(data, function (d) { return d.ser1 }), d3.max(data, function (d) { return d.ser1 })]);
+        if (typeof x_axis_start !== 'undefined') {
+            x_domain_min = x_axis_start
+        } else {
+            x_domain_min = d3.min(data, function (d) { return d.ser1 })
+        }
+        x.domain([x_domain_min, d3.max(data, function (d) { return d.ser1 })]);
         svg.selectAll(".myXaxis").transition()
             .duration(2000)
             .call(xAxis);
-
+        
         y.domain([d3.min(data, function (d) { return d.ser2 }), d3.max(data, function (d) { return d.ser2 })]);
         svg.selectAll(".myYaxis")
             .transition()

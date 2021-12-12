@@ -54,6 +54,14 @@ This currently supports the majority of Stan's univariate continuous distributio
 
 - [weibull](https://rok-cesnovar.github.io/stan-distributions/weibull)
 
+### Positive Lower-Bounded Distributions
+
+- [pareto](https://rok-cesnovar.github.io/stan-distributions/pareto)
+
+- [pareto_type_2](https://rok-cesnovar.github.io/stan-distributions/pareto_type_2)
+
+- [wiener](https://rok-cesnovar.github.io/stan-distributions/wiener)
+
 ### Continuous Distributions on [0, 1]
 
 - [beta](https://rok-cesnovar.github.io/stan-distributions/beta)

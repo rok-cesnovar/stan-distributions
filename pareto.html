@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://d3js.org/d3.v6.js"></script>
+  <script src="math-js-wasm/pareto.js"></script>
+  <script src="stan-distribution-zoo.js?v=2"></script>
+  <script>
+    var x;
+    var y;
+    var svg;
+    var xAxis;
+    var yAxis;
+    var data = [];
+    var x_axis_start = 0
+    var params = {
+      y_range: 40,
+      y_min: 8.6,
+      alpha: 1,
+    };
+    var continuous = true;
+
+    function update_data() {
+      data = []
+      for (let y = 0; y < params.y_range; y = y + params.y_range * 0.001) {
+        if(y >= params.y_min) {
+          let res = Module.pareto_lpdf(y, params.y_min, params.alpha)
+          if ($("#exp-check")[0].checked) {
+            res = Math.exp(res) 
+          }
+          data.push({ ser1: y, ser2:  res})
+        }        
+      }
+    }
+    var Module = {
+      onRuntimeInitialized: function () {
+        setup_page(
+          {
+            function_name: "pareto_lpdf (y | y_min, alpha)",
+            sliders: [
+              {
+                name: "y_range", text: "Range of y",
+                value: params.y_range, min: 1, max: 200, step: 1
+              },
+              {
+                name: "y_min", text: "y_min",
+                value: params.y_min, min: 0.1, max: 30, step: 0.1
+              },
+              {
+                name: "alpha", text: "alpha",
+                value: params.alpha, min: 0.1, max: 30, step: 0.1
+              }
+            ],
+            exponentiate: true,
+            continuous: true, 
+            x_axis_text: "y"
+          }
+        )
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <div id="figure"></div>
+</body>
+
+</html>
