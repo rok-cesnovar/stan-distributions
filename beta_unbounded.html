@@ -6,7 +6,7 @@
   <link rel="stylesheet" type="text/css" href="style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://d3js.org/d3.v6.js"></script>
-  <script src="math-js-wasm/beta.js"></script>
+  <script src="math-js-wasm/beta_unbounded.js"></script>
   <script src="stan-distribution-zoo.js"></script>
   <script>
     var x;
@@ -16,15 +16,16 @@
     var yAxis;
     var data = [];
     var params = {
-      alpha: 2,
-      beta: 2,
+      yupp: 300,
+      mu: 0.5,
+      phi: 120
     };
     var continuous = true;
 
     function update_data() {
       data = []
-      for (let y = 0.001; y < 1; y = y + 0.001) {
-        let res = Module.beta_lpdf(y, params.alpha, params.beta)
+      for (let y = 0.1; y < params.yupp; y = y + 0.01) {
+        let res = Module.beta_unbounded_lpdf(y, params.yupp, params.mu, params.phi)
         if ($("#exp-check")[0].checked) {
           res = Math.exp(res) 
         }
@@ -35,15 +36,19 @@
       onRuntimeInitialized: function () {
         setup_page(
           {
-            function_name: "beta_lpdf (y | alpha, beta)",
+            function_name: "beta_unbounded_lpdf(y | yupp, mu, phi)",
             sliders: [
               {
-                name: "alpha", text: "alpha",
-                value: params.alpha, min: 0.01, max: 20, step: 0.01
+                name: "yupp", text: "yupp",
+                value: params.yupp, min: 1, max: 500, step: 1
+              },  
+              {
+                name: "mu", text: "mu",
+                value: params.mu, min: 0.01, max: 1, step: 0.01
               },
               {
-                name: "beta", text: "beta",
-                value: params.beta, min: 0.01, max: 20, step: 0.01
+                name: "phi", text: "phi",
+                value: params.phi, min: 0.01, max: 200, step: 0.1
               }
             ],
             exponentiate: true,
