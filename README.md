@@ -87,6 +87,12 @@ This currently supports the majority of Stan's univariate continuous distributio
 
 - [poisson_log](https://rok-cesnovar.github.io/stan-distributions/poisson_log)
 
+## Custom distributions
+
+- [beta_unbounded](https://rok-cesnovar.github.io/stan-distributions/beta_unbounded)
+
+Contributed by @noejn2.
+
 ## Running it locally
 
 1. Clone the repository

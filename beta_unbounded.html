@@ -7,7 +7,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://d3js.org/d3.v6.js"></script>
   <script src="math-js-wasm/beta_unbounded.js"></script>
-  <script src="stan-distribution-zoo.js"></script>
+  <script src="stan-distribution-zoo.js?v=1"></script>
   <script>
     var x;
     var y;
@@ -53,7 +53,10 @@
             ],
             exponentiate: true,
             continuous: true, 
-            x_axis_text: "y"
+            x_axis_text: "y",
+            additional_text: '<div style=\"width: 50%;margin: auto;\"><h3>Stan code:</h3><pre>'+'    real beta_unbounded_lpdf(real y, real yupp, real mu, real phi) {\n'+'        real denominator = (phi - 1)*log(yupp);\n'+
+'        real logGamma = lgamma(phi)-(lgamma(mu*phi) + lgamma((1-mu)*phi));\n'+'        real numerator = (mu*phi-1)*log(y) + ((1-mu)*phi-1)*log(yupp - y);\n'+
+'    ' + '        return numerator - denominator + logGamma;\n' + '    }\n'+ '  </pre></div>'
           }
         )
       }
@@ -63,6 +66,7 @@
 
 <body>
   <div id="figure"></div>
-</body>
 
+</body>
 </html>
+

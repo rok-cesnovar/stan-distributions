@@ -110,6 +110,8 @@ function setup_page(settings) {
             })
             body.append(exp_check);
         }
+        var add_text = $(settings.additional_text);
+        body.append(add_text)
         add_figure(settings.x_axis_text)
     });
 
