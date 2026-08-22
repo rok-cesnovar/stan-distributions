@@ -1,5 +1,43 @@
 var height;
 var width;
+
+var all_distributions = {
+    "Unbounded Continuous": ["cauchy", "double_exponential", "exp_mod_normal", "gumbel",
+        "logistic", "normal", "skew_double_exponential", "skew_normal", "std_normal", "student_t"],
+    "Positive Continuous": ["chi_square", "exponential", "frechet", "gamma", "inv_chi_square",
+        "inv_gamma", "lognormal", "rayleigh", "scaled_inv_chi_square", "weibull"],
+    "Positive Lower-Bounded": ["pareto", "pareto_type_2", "wiener"],
+    "Continuous on [0, 1]": ["beta", "beta_proportion"],
+    "Circular": ["von_mises"],
+    "Bounded Continuous": ["uniform"],
+    "Unbounded Discrete": ["neg_binomial", "neg_binomial_2", "neg_binomial_2_log",
+        "poisson", "poisson_log"],
+    "Custom": ["beta_unbounded"]
+};
+
+function add_navigation() {
+    var current = window.location.pathname.split("/").pop().replace(".html", "");
+    var nav = $('<div class="nav-bar"></div>');
+    nav.append('<a class="nav-home" href="index.html">Stan distributions</a>');
+    var select = $('<select class="nav-select"></select>');
+    select.append('<option value="" disabled>Jump to distribution</option>');
+    for (var category in all_distributions) {
+        var group = $('<optgroup label="' + category + '"></optgroup>');
+        all_distributions[category].forEach(function (name) {
+            group.append('<option value="' + name + '.html">' + name + '</option>');
+        });
+        select.append(group);
+    }
+    select.val(current + ".html");
+    if (!select.val()) {
+        select.prop("selectedIndex", 0);
+    }
+    select.on("change", function () {
+        window.location.href = $(this).val();
+    });
+    nav.append(select);
+    $("body").prepend(nav);
+}
 function add_figure(x_axis_text) {
 
     update_data()
@@ -75,6 +113,7 @@ function setBubble(range, bubble) {
 
 function setup_page(settings) {
     $(document).ready(function () {
+        add_navigation();
         $("head").append($("<title>" + settings.function_name + "</title>"));
         var body = $("body");
         var function_name = $('<div class="distribution-name"><h2>' + settings.function_name + '</h2></div>');

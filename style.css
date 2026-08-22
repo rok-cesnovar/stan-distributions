@@ -184,6 +184,66 @@
    transform: rotate(45deg);
  }
 
+ .nav-bar {
+  width: 50%;
+  margin: 0.5rem auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #b2001d;
+ }
+
+ .nav-home {
+  color: #b2001d;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-decoration: none;
+ }
+
+ .nav-home:hover {
+  text-decoration: underline;
+ }
+
+ .nav-select {
+  padding: 4px 8px;
+  border: 1px solid #b2001d;
+  border-radius: 4px;
+  color: #b2001d;
+  background: white;
+  font-size: 1rem;
+ }
+
+ .index-categories {
+  width: 50%;
+  margin: auto;
+ }
+
+ .index-categories h3 {
+  color: #b2001d;
+  border-bottom: 1px solid #b2001d;
+  padding-bottom: 0.25rem;
+ }
+
+ .index-categories ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+ }
+
+ .index-categories a {
+  color: #333;
+  text-decoration: none;
+ }
+
+ .index-categories a:hover {
+  color: #b2001d;
+  text-decoration: underline;
+ }
+
  .distribution-name {
   width: 50%;
   margin: auto;

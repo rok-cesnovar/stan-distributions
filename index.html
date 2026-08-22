@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Stan distributions</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="stan-distribution-zoo.js"></script>
+  <script>
+    $(document).ready(function () {
+      var container = $('<div class="index-categories"></div>');
+      for (var category in all_distributions) {
+        container.append('<h3>' + category + '</h3>');
+        var list = $('<ul></ul>');
+        all_distributions[category].forEach(function (name) {
+          list.append('<li><a href="' + name + '.html">' + name + '</a></li>');
+        });
+        container.append(list);
+      }
+      $("body").append(container);
+    });
+  </script>
+</head>
+
+<body>
+  <div class="distribution-name">
+    <h2>Stan distributions</h2>
+    <p>Interactive visualizations of Stan's probability distributions, evaluated with the actual
+      Stan Math C++ implementations compiled to WebAssembly.</p>
+  </div>
+</body>
+
+</html>
