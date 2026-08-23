@@ -103,16 +103,6 @@ function add_figure(x_axis_text) {
     update()
 }
 
-function setBubble(range, bubble) {
-    const val = range.val();
-    const min = range.attr("min");
-    const max = range.attr("max");
-    const newVal = Number(((val - min) * 100) / (max - min));
-    bubble
-        .html(val)
-        .css("left", `calc(${newVal}% + (${8 - newVal * 0.15}px))`);
-}
-
 function setup_page(settings) {
     $(document).ready(function () {
         add_navigation();
@@ -132,20 +122,27 @@ function setup_page(settings) {
                 + settings.sliders[i].value + '" min="' + settings.sliders[i].min
                 + '" max="' + settings.sliders[i].max + '" step="' + settings.sliders[i].step
                 + '" id="' + settings.sliders[i].name + '" name="' + settings.sliders[i].name + '" >');
-            var out = $('<output class="bubble"></output>');
+            var num = $('<input type="number" class="num-input" step="'
+                + settings.sliders[i].step + '" value="' + settings.sliders[i].value + '">');
             inp.on("input", function () {
-
-                setBubble($(this), $(this).parent().children('.bubble'))
+                $(this).parent().children('.num-input').val($(this).val());
             });
             inp.on("change", function () {
-                $(".range").each(function () {
-                    params[$(this).attr("name")] = $(this).val();
-                });
+                params[$(this).attr("name")] = parseFloat($(this).val());
                 update()
             })
-            setBubble(inp, out);
+            num.on("change", function () {
+                var v = parseFloat($(this).val());
+                if (isNaN(v)) {
+                    return;
+                }
+                var range = $(this).parent().children('.range');
+                params[range.attr("name")] = v;
+                range.val(v);
+                update()
+            })
             var slider = $('<div class="range-wrap"></div>');
-            controls.append(slider.append(label).append(inp).append(out));
+            controls.append(slider.append(label).append(num).append(inp));
         }
         if (settings.exponentiate) {
             var exp_check = $(
