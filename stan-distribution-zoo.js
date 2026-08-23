@@ -102,6 +102,12 @@ function add_figure(x_axis_text) {
         .attr("y", height+30)
         .text(x_axis_text);
 
+    svg.append("text")
+        .attr("class", "yTitle")
+        .attr("text-anchor", "start")
+        .attr("x", -50)
+        .attr("y", -12)
+
     update()
 }
 
@@ -246,5 +252,8 @@ function update() {
             .attr("fill", "#b2001d")
     }
 
+    var exp_on = $("#exp-check").length && $("#exp-check")[0].checked;
+    svg.selectAll(".yTitle")
+        .text((exp_on ? "p(" : "log p(") + figure_x_axis_text + ")");
 }
 
