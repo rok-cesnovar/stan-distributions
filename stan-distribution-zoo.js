@@ -1,5 +1,6 @@
 var height;
 var width;
+var figure_x_axis_text;
 
 var all_distributions = {
     "Unbounded Continuous": ["cauchy", "double_exponential", "exp_mod_normal", "gumbel",
@@ -40,6 +41,7 @@ function add_navigation() {
 }
 function add_figure(x_axis_text) {
 
+    figure_x_axis_text = x_axis_text;
     update_data()
 
     if (continuous) {
@@ -119,6 +121,11 @@ function setup_page(settings) {
         var function_name = $('<div class="distribution-name"><h2>' + settings.function_name + '</h2></div>');
         body.append(function_name);
 
+        var layout = $('<div class="main-layout"></div>');
+        var controls = $('<div class="controls"></div>');
+        layout.append($("#figure")).append(controls);
+        body.append(layout);
+
         for (i = 0; i < settings.sliders.length; i++) {
             var label = $('<label for="' + settings.sliders[i].name + '_slider">' + settings.sliders[i].text + '</label>');
             var inp = $('<input type="range" class="range" value="'
@@ -138,7 +145,7 @@ function setup_page(settings) {
             })
             setBubble(inp, out);
             var slider = $('<div class="range-wrap"></div>');
-            body.append(slider.append(label).append(inp).append(out));
+            controls.append(slider.append(label).append(inp).append(out));
         }
         if (settings.exponentiate) {
             var exp_check = $(
@@ -147,7 +154,7 @@ function setup_page(settings) {
             exp_check.on("change", function () {
                 update()
             })
-            body.append(exp_check);
+            controls.append(exp_check);
         }
         var add_text = $(settings.additional_text);
         body.append(add_text)
@@ -157,6 +164,15 @@ function setup_page(settings) {
             });
         }
         add_figure(settings.x_axis_text)
+
+        var resize_timer;
+        $(window).on("resize", function () {
+            clearTimeout(resize_timer);
+            resize_timer = setTimeout(function () {
+                d3.select("#figure").select("svg").remove();
+                add_figure(figure_x_axis_text);
+            }, 200);
+        });
     });
 
 
