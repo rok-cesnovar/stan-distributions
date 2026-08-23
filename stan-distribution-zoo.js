@@ -6,13 +6,15 @@ var all_distributions = {
     "Unbounded Continuous": ["cauchy", "double_exponential", "exp_mod_normal", "gumbel",
         "logistic", "normal", "skew_double_exponential", "skew_normal", "std_normal", "student_t"],
     "Positive Continuous": ["chi_square", "exponential", "frechet", "gamma", "inv_chi_square",
-        "inv_gamma", "lognormal", "rayleigh", "scaled_inv_chi_square", "weibull"],
-    "Positive Lower-Bounded": ["pareto", "pareto_type_2", "wiener"],
+        "inv_gamma", "loglogistic", "lognormal", "rayleigh", "scaled_inv_chi_square", "weibull"],
+    "Positive Lower-Bounded": ["pareto", "pareto_type_2", "wiener", "wiener_full"],
     "Continuous on [0, 1]": ["beta", "beta_proportion"],
     "Circular": ["von_mises"],
     "Bounded Continuous": ["uniform"],
-    "Unbounded Discrete": ["neg_binomial", "neg_binomial_2", "neg_binomial_2_log",
-        "poisson", "poisson_log"],
+    "Bounded Discrete": ["bernoulli", "bernoulli_logit", "beta_binomial", "binomial",
+        "binomial_logit", "discrete_range", "hypergeometric"],
+    "Unbounded Discrete": ["beta_neg_binomial", "neg_binomial", "neg_binomial_2",
+        "neg_binomial_2_log", "poisson", "poisson_log", "yule_simon"],
     "Custom": ["beta_unbounded"]
 };
 
@@ -171,8 +173,6 @@ function setup_page(settings) {
             }, 200);
         });
     });
-
-
 }
 
 function update() {

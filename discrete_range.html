@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://d3js.org/d3.v6.js"></script>
+  <script src="math-js-wasm/discrete_range.js"></script>
+  <script src="stan-distribution-zoo.js"></script>
+  <script>
+    var x;
+    var y;
+    var svg;
+    var xAxis;
+    var yAxis;
+    var data = [];
+    var params = {
+      l: 2,
+      u: 8
+    };
+    var continuous = false;
+    function update_data() {
+      data = []
+      let lo = Math.round(Math.min(params.l, params.u))
+      let hi = Math.round(Math.max(params.l, params.u))
+      for (let n = lo; n <= hi; n = n + 1) {
+        let res = Module.discrete_range_lpmf(n, lo, hi)
+        if ($("#exp-check")[0].checked) {
+          res = Math.exp(res)
+        }
+        data.push({ ser1: n, ser2: res })
+      }
+    }
+    var Module = {
+      onRuntimeInitialized: function () {
+        setup_page(
+          {
+            function_name: "discrete_range_lpmf (y | l, u)",
+            sliders: [
+              {
+                name: "l", text: "l (lower)",
+                value: params.l, min: -50, max: 50, step: 1
+              },
+              {
+                name: "u", text: "u (upper)",
+                value: params.u, min: -50, max: 50, step: 1
+              }
+            ],
+            exponentiate: true,
+            x_axis_text: "y"
+          }
+        )
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <div id="figure"></div>
+</body>
+
+</html>

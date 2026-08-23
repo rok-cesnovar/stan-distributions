@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://d3js.org/d3.v6.js"></script>
+  <script src="math-js-wasm/loglogistic.js"></script>
+  <script src="stan-distribution-zoo.js"></script>
+  <script>
+    var x;
+    var y;
+    var svg;
+    var xAxis;
+    var yAxis;
+    var data = [];
+    var params = {
+      y_range: 10,
+      alpha: 2,
+      beta: 3
+    };
+    var continuous = true;
+    function update_data() {
+      data = []
+      for (let y = 0.01; y < params.y_range; y = y + params.y_range * 0.001) {
+        let res = Module.loglogistic_lpdf(y, params.alpha, params.beta)
+        if ($("#exp-check")[0].checked) {
+          res = Math.exp(res)
+        }
+        data.push({ ser1: y, ser2: res })
+      }
+    }
+    var Module = {
+      onRuntimeInitialized: function () {
+        setup_page(
+          {
+            function_name: "loglogistic_lpdf (y | alpha, beta)",
+            sliders: [
+              {
+                name: "y_range", text: "Range of y",
+                value: params.y_range, min: 1, max: 200, step: 1
+              },
+              {
+                name: "alpha", text: "alpha (scale)",
+                value: params.alpha, min: 0.1, max: 30, step: 0.1
+              },
+              {
+                name: "beta", text: "beta (shape)",
+                value: params.beta, min: 0.1, max: 30, step: 0.1
+              }
+            ],
+            exponentiate: true,
+            continuous: true,
+            x_axis_text: "y"
+          }
+        )
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <div id="figure"></div>
+</body>
+
+</html>

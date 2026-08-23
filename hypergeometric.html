@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://d3js.org/d3.v6.js"></script>
+  <script src="math-js-wasm/hypergeometric.js"></script>
+  <script src="stan-distribution-zoo.js"></script>
+  <script>
+    var x;
+    var y;
+    var svg;
+    var xAxis;
+    var yAxis;
+    var data = [];
+    var params = {
+      N: 15,
+      a: 20,
+      b: 20
+    };
+    var continuous = false;
+    function update_data() {
+      data = []
+      let a = Math.round(params.a)
+      let b = Math.round(params.b)
+      let N = Math.min(Math.round(params.N), a + b)
+      let n_min = Math.max(0, N - b)
+      let n_max = Math.min(a, N)
+      for (let n = n_min; n <= n_max; n = n + 1) {
+        let res = Module.hypergeometric_lpmf(n, N, a, b)
+        if ($("#exp-check")[0].checked) {
+          res = Math.exp(res)
+        }
+        data.push({ ser1: n, ser2: res })
+      }
+    }
+    var Module = {
+      onRuntimeInitialized: function () {
+        setup_page(
+          {
+            function_name: "hypergeometric_lpmf (n | N, a, b)",
+            sliders: [
+              {
+                name: "N", text: "N (draws)",
+                value: params.N, min: 1, max: 100, step: 1
+              },
+              {
+                name: "a", text: "a (successes in population)",
+                value: params.a, min: 1, max: 100, step: 1
+              },
+              {
+                name: "b", text: "b (failures in population)",
+                value: params.b, min: 1, max: 100, step: 1
+              }
+            ],
+            exponentiate: true,
+            x_axis_text: "n"
+          }
+        )
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <div id="figure"></div>
+</body>
+
+</html>

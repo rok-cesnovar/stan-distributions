@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://d3js.org/d3.v6.js"></script>
+  <script src="math-js-wasm/wiener_full.js"></script>
+  <script src="stan-distribution-zoo.js"></script>
+  <script>
+    var x;
+    var y;
+    var svg;
+    var xAxis;
+    var yAxis;
+    var data = [];
+    var params = {
+      y_range: 5,
+      a: 2,
+      t0: 0.3,
+      w: 0.5,
+      v: 1,
+      sv: 0.5,
+      sw: 0.1,
+      st0: 0.2
+    };
+    var continuous = true;
+    function update_data() {
+      data = []
+      let w = params.w
+      let sw = Math.min(params.sw, Math.max(0, 1.98 * Math.min(w, 1 - w)))
+      for (let y = 0.001; y < params.y_range; y = y + params.y_range * 0.002) {
+        if (y > params.t0 + 0.001) {
+          let res = Module.wiener_full_lpdf(y, params.a, params.t0, w, params.v, params.sv, sw, params.st0)
+          if ($("#exp-check")[0].checked) {
+            res = Math.exp(res)
+          }
+          data.push({ ser1: y, ser2: res })
+        }
+      }
+    }
+    var Module = {
+      onRuntimeInitialized: function () {
+        setup_page(
+          {
+            function_name: "wiener_lpdf (y | a, t0, w, v, sv, sw, st0)",
+            sliders: [
+              {
+                name: "y_range", text: "Range of y",
+                value: params.y_range, min: 1, max: 50, step: 1
+              },
+              {
+                name: "a", text: "a (boundary separation)",
+                value: params.a, min: 0.1, max: 10, step: 0.1
+              },
+              {
+                name: "t0", text: "t0 (non-decision time)",
+                value: params.t0, min: 0, max: 5, step: 0.05
+              },
+              {
+                name: "w", text: "w (a priori bias)",
+                value: params.w, min: 0.05, max: 0.95, step: 0.01
+              },
+              {
+                name: "v", text: "v (drift rate)",
+                value: params.v, min: -10, max: 10, step: 0.1
+              },
+              {
+                name: "sv", text: "sv (drift rate sd)",
+                value: params.sv, min: 0, max: 5, step: 0.05
+              },
+              {
+                name: "sw", text: "sw (bias range)",
+                value: params.sw, min: 0, max: 0.8, step: 0.01
+              },
+              {
+                name: "st0", text: "st0 (non-decision time range)",
+                value: params.st0, min: 0, max: 5, step: 0.05
+              }
+            ],
+            exponentiate: true,
+            continuous: true,
+            x_axis_text: "y"
+          }
+        )
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <div id="figure"></div>
+</body>
+
+</html>
