@@ -7,6 +7,9 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://d3js.org/d3.v6.js"></script>
   <script src="math-js-wasm/beta_unbounded.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/stan.min.js"></script>
   <script src="stan-distribution-zoo.js?v=1"></script>
   <script>
     var x;
@@ -54,9 +57,14 @@
             exponentiate: true,
             continuous: true, 
             x_axis_text: "y",
-            additional_text: '<div style=\"width: 50%;margin: auto;\"><h3>Stan code:</h3><pre>'+'    real beta_unbounded_lpdf(real y, real yupp, real mu, real phi) {\n'+'        real denominator = (phi - 1)*log(yupp);\n'+
-'        real logGamma = lgamma(phi)-(lgamma(mu*phi) + lgamma((1-mu)*phi));\n'+'        real numerator = (mu*phi-1)*log(y) + ((1-mu)*phi-1)*log(yupp - y);\n'+
-'    ' + '        return numerator - denominator + logGamma;\n' + '    }\n'+ '  </pre></div>'
+            additional_text: `<div class="additional-text"><h3>Stan code:</h3>
+<pre><code class="language-stan">real beta_unbounded_lpdf(real y, real yupp, real mu, real phi) {
+  real denominator = (phi - 1) * log(yupp);
+  real logGamma = lgamma(phi) - (lgamma(mu * phi) + lgamma((1 - mu) * phi));
+  real numerator = (mu * phi - 1) * log(y) + ((1 - mu) * phi - 1) * log(yupp - y);
+  return numerator - denominator + logGamma;
+}
+</code></pre></div>`
           }
         )
       }

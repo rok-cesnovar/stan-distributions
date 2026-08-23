@@ -151,6 +151,11 @@ function setup_page(settings) {
         }
         var add_text = $(settings.additional_text);
         body.append(add_text)
+        if (window.hljs) {
+            add_text.find("pre code").each(function () {
+                hljs.highlightElement(this);
+            });
+        }
         add_figure(settings.x_axis_text)
     });
 

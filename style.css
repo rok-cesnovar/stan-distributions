@@ -249,6 +249,23 @@
   margin: auto;
  }
 
+ .additional-text {
+  width: 50%;
+  margin: auto;
+ }
+
+ .additional-text pre {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  overflow-x: auto;
+ }
+
+ .additional-text pre code {
+  display: block;
+  padding: 1rem;
+  font-size: 0.9rem;
+ }
+
  #figure {
   width: 50%;
   margin: auto;
