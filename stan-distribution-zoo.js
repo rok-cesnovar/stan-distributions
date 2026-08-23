@@ -47,7 +47,7 @@ function add_figure(x_axis_text) {
     update_data()
 
     if (continuous) {
-        const margin = { top: 30, right: 50, bottom: 30, left: 50 };
+        const margin = { top: 30, right: 50, bottom: 30, left: 60 };
         width = $("#figure").width() - margin.left - margin.right;
         height = 500 - margin.top - margin.bottom;
 
@@ -65,11 +65,11 @@ function add_figure(x_axis_text) {
             .attr("class", "myXaxis")
 
         y = d3.scaleLinear().range([height, 0]);
-        yAxis = d3.axisLeft().scale(y);
+        yAxis = d3.axisLeft().scale(y).tickFormat(d3.format(".4~r"));
         svg.append("g")
             .attr("class", "myYaxis")
     } else {
-        const margin = { top: 30, right: 50, bottom: 30, left: 50 };
+        const margin = { top: 30, right: 50, bottom: 30, left: 60 };
         width = $("#figure").width() - margin.left - margin.right;
         height = 500 - margin.top - margin.bottom;
         // append the svg object to the body of the page
@@ -218,8 +218,19 @@ function update() {
         x.domain(data.map(d => d.ser1))
         xAxis.call(d3.axisBottom(x))
 
-        y.domain([d3.min(data, d => d.ser2), d3.max(data, d => d.ser2)]);
-        yAxis.transition().duration(1000).call(d3.axisLeft(y));
+        var y_min = d3.min(data, d => d.ser2);
+        var y_max = d3.max(data, d => d.ser2);
+        var exponentiated = $("#exp-check").length && $("#exp-check")[0].checked;
+        if (exponentiated) {
+            y.domain([0, y_max]);
+        } else {
+            var span = y_max - y_min;
+            if (span === 0) {
+                span = Math.max(Math.abs(y_max), 1);
+            }
+            y.domain([y_min - 0.05 * span, y_max]);
+        }
+        yAxis.transition().duration(1000).call(d3.axisLeft(y).tickFormat(d3.format(".4~r")));
 
         var u = svg.selectAll("rect")
             .data(data)
